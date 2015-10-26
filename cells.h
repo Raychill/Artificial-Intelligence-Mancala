@@ -1,21 +1,27 @@
+
 #ifndef CELLS_H
 #define CELLS_H
-#include <map>
-#include <string>
-#include "mainwindow.h"
-#include "newgame.h"
 
-using namespace std;
+#include <QAbstractButton>
+
 
 class cells
 {
+
+protected:
+
 public:
-    int cellNum;
-    int marbelNum;
+
+    unsigned int cellNum;
+    unsigned int marbelNum;
+    QAbstractButton *button;
+    bool isBank;
+
+
     cells();
-    //~cells();
+    ~cells();
 
 
-};
+}; // End of cells class.
 
 #endif // CELLS_H

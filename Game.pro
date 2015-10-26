@@ -14,13 +14,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    newgame.cpp \
     cells.cpp \
-    singleagent.cpp
+    singleagent.cpp \
+    mBoard.cpp
 
 HEADERS  += mainwindow.h \
-    newgame.h \
     singleagent.h \
-    cells.h
+    cells.h \
+    mBoard.h
 
 FORMS    += mainwindow.ui

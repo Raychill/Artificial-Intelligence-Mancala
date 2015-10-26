@@ -1,6 +1,6 @@
 #ifndef SINGLEAGENT
 #define SINGLEAGENT
-#include "newgame.h"
+#include "mBoard.h"
 #include "mainwindow.h"
 class agent
 {

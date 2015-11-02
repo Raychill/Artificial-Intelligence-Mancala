@@ -36,13 +36,14 @@ public:
 
     void setNewGame();
 
+    void flush(void) const;
     bool updateBoard(const unsigned int key,
                      const unsigned int bankkey);
 
     bool isGameOver();
 
-    std::vector<cells> getA();
-    std::vector<cells> getB();
+    std::vector<cells> getA() const;
+    std::vector<cells> getB() const;
 
 
 }; // End of mBoard class.

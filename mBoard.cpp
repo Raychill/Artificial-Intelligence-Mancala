@@ -61,6 +61,26 @@ void mBoard :: setNewGame()
 }
 
 
+void mBoard::flush(void) const
+{
+    std::vector<cells> cellsA = getA();
+    std::vector<cells> cellsB = getB();
+
+    const size_t len = cellsA.size();
+
+    // For All the cells A or B without the banks cells.
+    for(size_t i = 0; i < len -1; ++i)
+    {
+        // Add all the marbels to bank A.
+        cellsA.back().marbelNum += cellsA[i].marbelNum;
+        cellsA[i].marbelNum = 0;
+
+        // Add all the marbels to bank B.
+        cellsB.back().marbelNum += cellsB[i].marbelNum;
+        cellsB[i].marbelNum = 0;
+    }
+} // End of flush().
+
 
 bool mBoard::updateBoard(const unsigned int key, const unsigned int bankkey)
 {
@@ -115,7 +135,7 @@ bool mBoard::isGameOver()
 
 
 
-std::vector<cells> mBoard::getA()
+std::vector<cells> mBoard::getA() const
 {
     std::vector<cells> listCells;
 
@@ -129,7 +149,7 @@ std::vector<cells> mBoard::getA()
     return listCells;
 }
 
-std::vector<cells> mBoard::getB()
+std::vector<cells> mBoard::getB() const
 {
     std::vector<cells> listCells;
 

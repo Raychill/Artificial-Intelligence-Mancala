@@ -47,9 +47,11 @@ int agent::getMaxMove(void)
 
    vector<cells> moves = getMinMax();
    int max = moves[0].marbelNum;
-   int index = 0;
+   int index = 1;
     for(int i = 0; i < moves.size();i++){
        // max = moves[i].marbelNum;
+       // if(moves[i].cellNum == 0)
+         //   i++;
         if(moves[i].marbelNum == 0)
             i++;//prune any 0s
         if(max < moves[i].marbelNum)

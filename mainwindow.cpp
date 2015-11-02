@@ -271,19 +271,23 @@ void MainWindow::Single_updateGameState(const unsigned int key)
 }
 void MainWindow::dualAgent_updateGameState(const unsigned int key, const unsigned int bankKey)
 {
-
+    setEnabledButtonSetA(true);
+    setEnabledButtonSetB(true);
 while(board.hasMovesA() && board.hasMovesB()){
-bool aiGoAgain = false;
-do{
-    aiGoAgain = board.updateBoard(myAi(),7);
-    updateButtons();
-}
-while(aiGoAgain);
+    setEnabledButtonSetA(true);
+    setEnabledButtonSetB(true);
+    bool aiGoAgain = false;
+    do{
+        aiGoAgain = board.updateBoard(myAi(),7);
+        updateButtons();
+    }
+    while(aiGoAgain);
 
-do{
-    aiGoAgain = board.updateBoard(myAi(),0);
-    updateButtons();
-}while(aiGoAgain);
+    do{
+        aiGoAgain = board.updateBoard(myAi(),0);
+        updateButtons();
+    }while(aiGoAgain);
+updateButtons();
 
 }
 updateButtons();

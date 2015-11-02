@@ -169,86 +169,17 @@ void MainWindow::updateButtons()
 
 void MainWindow::updateGameState(const unsigned int key, const unsigned int bankKey)
 {
-    agent AI(board);
-    //pass in intkey, int bank position
-    //if goagain is true then you
-     // if key < boardsize/2 (B is shown)
-    // if key > boardsize/2 (A is shown)
-    // setEnabledButtonSetA/b(t/f);
-    //updateButtons();
 
     if(mode == DUALPLAYER)
     {
         dualPlayer_updateGameState(key, bankKey);
     }
-
-
-if(mode == SINGLE){
-    if(board.updateBoard(key,bankKey) == true ){
-       /* if(key < board.size()/2){
-            setEnabledButtonSetB(false);
-            setEnabledButtonSetA(true);
-
-
-        }*/
-       // if(key > board.size()/2){
-            setEnabledButtonSetA(true);
-            setEnabledButtonSetB(false);
-           // int index = AI.getMaxMove();
-           //board.updateBoard(index,8);// board.updateBoard(AI.getNextMove(),8);
-        //}
-
-    }
-    else
-    {       //int index = AI.getMaxMove();
-            board.updateBoard(AI.getMaxMove(),0);
-            setEnabledButtonSetA(true);
-            setEnabledButtonSetB(false);
-            //int index = AI.getMaxMove();
-            updateButtons();
-
-       // }
-    }
-//updateGameState(AI.getMaxMove(),8);
-updateButtons();
-}
-}
-
-//void Mainwindow::gameState
-/*void MainWindow::setAgentGame(const int key,const int bankKey)
-{
-  if(board.updateBoard(key,bankKey) == true){
-        if(key < board.size()/2){
-            setEnabledButtonSetB(false);
-            setEnabledButtonSetA(true);
-
-        }
-        if(key > board.size()/2){
-
-            setEnabledButtonSetA(false);
-            setEnabledButtonSetB(true);
-           // mAgent.getMaxMove();
-        }
-
-    }
-    else
+    else if(mode == SINGLE)
     {
-        if(key < board.size()/2){
-            setEnabledButtonSetB(true);
-            setEnabledButtonSetA(false);
-
-        }
-        if(key > board.size()/2){
-            setEnabledButtonSetA(true);
-            setEnabledButtonSetB(false);
-          // mAgent.getMaxMove();
-        }
+        Single_updateGameState(key);
     }
     updateButtons();
-
-
 }
-*/
 
 
 void MainWindow::dualPlayer_updateGameState(const unsigned int key, const unsigned int bankKey)
@@ -281,6 +212,8 @@ void MainWindow::dualPlayer_updateGameState(const unsigned int key, const unsign
     }
 }
 
+
+
 int MainWindow::myAi()
 {
     unsigned int max = 0;
@@ -300,4 +233,48 @@ int MainWindow::myAi()
     }
 
     return maxIndex;
+}
+
+void MainWindow::Single_updateGameState(const unsigned int key)
+{
+    //agent AI(board);
+
+    if(board.updateBoard(key, 7) == true)
+    {
+        setEnabledButtonSetA(true);
+        setEnabledButtonSetB(false);
+    }
+    else
+    {
+       agent A(board);
+       //bool aiGoAgain = false;
+         bool aiGoAgain = false;
+
+        do
+        {
+             aiGoAgain = board.updateBoard(A.getNextMove(),0);
+             ui->pushButton_15->setText(QString::number(A.getNextMove()));
+         /*  int aiMove = 10;
+
+            vector<cells> cList = board.getA();
+
+
+            // Pick the move!!
+            for(int i = 0; i < cList.size();++i)
+                if(cList[i].marbelNum != 0)
+                {
+                    aiMove = cList[i].cellNum;
+                    ui->pushButton_15->setText(QString::number(cList[i].cellNum));
+                    break;
+                }
+
+            aiGoAgain = board.updateBoard(aiMove, 0);*/
+
+             updateButtons();
+        } while(aiGoAgain);
+        setEnabledButtonSetA(true);
+        setEnabledButtonSetB(false);
+    }
+
+
 }

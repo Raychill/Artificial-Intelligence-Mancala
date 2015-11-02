@@ -108,3 +108,32 @@ bool mBoard::isGameOver()
 
 } // End of isGameOver().
 
+
+
+std::vector<cells> mBoard::getA()
+{
+    std::vector<cells> listCells;
+
+    int i = 1;
+    for(; !boardState[i].isBank; i = (i + 1) % cellCount)
+        listCells.push_back(boardState[i]);
+
+    // Add the bank to the list.
+    listCells.push_back(boardState[i]);
+
+    return listCells;
+}
+
+std::vector<cells> mBoard::getB()
+{
+    std::vector<cells> listCells;
+
+    int i = 8;
+    for(; !boardState[i].isBank; i = (i + 1) % cellCount)
+        listCells.push_back(boardState[i]);
+
+    // Add the bank to the list.
+    listCells.push_back(boardState[i]);
+
+    return listCells;
+}

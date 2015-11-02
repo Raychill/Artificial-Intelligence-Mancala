@@ -5,7 +5,6 @@
 
 #include "cells.h"
 
-using namespace std;
 
 
 class mBoard
@@ -40,6 +39,9 @@ public:
                      const unsigned int bankkey);
 
     bool isGameOver();
+
+    std::vector<cells> getA();
+    std::vector<cells> getB();
 
 
 }; // End of mBoard class.

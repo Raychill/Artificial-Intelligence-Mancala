@@ -252,23 +252,8 @@ void MainWindow::Single_updateGameState(const unsigned int key)
 
         do
         {
-             aiGoAgain = board.updateBoard(A.getNextMove(),0);
-             ui->pushButton_15->setText(QString::number(A.getNextMove()));
-         /*  int aiMove = 10;
 
-            vector<cells> cList = board.getA();
-
-
-            // Pick the move!!
-            for(int i = 0; i < cList.size();++i)
-                if(cList[i].marbelNum != 0)
-                {
-                    aiMove = cList[i].cellNum;
-                    ui->pushButton_15->setText(QString::number(cList[i].cellNum));
-                    break;
-                }
-
-            aiGoAgain = board.updateBoard(aiMove, 0);*/
+            aiGoAgain = board.updateBoard(myAi(), 0);
 
              updateButtons();
         } while(aiGoAgain);

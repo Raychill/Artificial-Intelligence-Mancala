@@ -22,7 +22,7 @@ private slots:
     void updateGameState(const unsigned int key, const unsigned int bankKey);
     void setEnabledButtonSetA(const bool b);
     void setEnabledButtonSetB(const bool b);
-
+    void setAgentGame(mBoard &board,const int key, const int bankKey);
 
     void on_actionDualPlayers_triggered();
 
@@ -40,6 +40,8 @@ private slots:
     void on_pushButton_12_clicked();
     void on_pushButton_13_clicked();
     void on_pushButton_14_clicked();
+
+    void on_actionSinglePlayer_triggered();
 
 private:
     Ui::MainWindow *ui;

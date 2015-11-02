@@ -1,8 +1,9 @@
 #ifndef SINGLEAGENT
 #define SINGLEAGENT
+#include <vector>
 #include "mBoard.h"
 
-
+using namespace std;
 
 class agent
 {
@@ -20,7 +21,7 @@ public:
     int getNextMove(void);
     int getMinMove(void);
     int getMaxMove(void);
-    int getMinMax(void);
+    vector<cells> getMinMax(char player);
 
 
     /*

@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include "mBoard.h"
 #include "cells.h"
-
+#include "singleagent.h"
 #include <QButtonGroup>
 
 mBoard board(14, 0, 7);
@@ -48,6 +48,15 @@ void MainWindow::on_actionDualPlayers_triggered()
 {
     board.setNewGame();
     updateButtons();
+    setEnabledButtonSetA(true);
+    setEnabledButtonSetB(false);
+}
+
+void MainWindow::on_actionSinglePlayer_triggered()
+{
+    agent mAgent(board);
+    board.setNewGame();
+    setAgentGame(-1,-1);
     setEnabledButtonSetA(true);
     setEnabledButtonSetB(false);
 }
@@ -238,5 +247,40 @@ void MainWindow::updateGameState(const unsigned int key, const unsigned int bank
     }
     updateButtons();
 
+
+}
+
+void MainWindow::setAgentGame(mBoard &board,const int key,const int bankKey)
+{
+  /* // agent mAgent(board);
+    if(board.updateBoard(key,bankKey) == true){
+        if(key < board.size()/2){
+            setEnabledButtonSetB(false);
+            setEnabledButtonSetA(true);
+
+        }
+        if(key > board.size()/2){
+
+            setEnabledButtonSetA(false);
+            setEnabledButtonSetB(true);
+            mAgent.getMaxMove();
+        }
+
+    }
+    else
+    {
+        if(key < board.size()/2){
+            setEnabledButtonSetB(true);
+            setEnabledButtonSetA(false);
+
+        }
+        if(key > board.size()/2){
+            setEnabledButtonSetA(true);
+            setEnabledButtonSetB(false);
+            mAgent.getMaxMove();
+        }
+    }
+    updateButtons();
+*/
 
 }

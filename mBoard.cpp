@@ -23,14 +23,14 @@ mBoard::mBoard(const unsigned int cellCount,
 
 }
 
-mBoard::mBoard(const mBoard & other):cellCount(other->cellCount),bankkeyA(other->bankkeyA),bankkeyB(other->bankkeyB)
+mBoard::mBoard(const mBoard & other):cellCount(other.cellCount),bankkeyA(other.bankkeyA),bankkeyB(other.bankkeyB)
 {
 
-    boardState = new cells[other->cellCount];
+    boardState = new cells[other.cellCount];
 
     for(size_t i = 0; i < cellCount; ++i)
     {
-        boardState[i] = other->at(i);
+        boardState[i] = other.at(i);
     }
 
 
@@ -47,7 +47,7 @@ mBoard::~mBoard()
 }
 
 
-cells & mBoard::operator[](const int i)
+cells & mBoard::operator[](const int i) const
 {
     return boardState[i];
 }
@@ -57,15 +57,17 @@ mBoard & mBoard::operator= (const mBoard & other)
 {
     delete[] boardState;
 
-    boardState = new cells[other->cellCount];
+    boardState = new cells[other.cellCount];
 
-    cellCount = other->cellCount;
-    bankkeyA = other->bankkeyA;
-    bankkeyB = other->bankkeyB;
+    /*
+    cellCount = other.cellCount;
+    bankkeyA = other.bankkeyA;
+    bankkeyB = other.bankkeyB;
+    */
 
     for(size_t i = 0; i < cellCount; ++i)
     {
-        boardState[i] = other->at(i);
+        boardState[i] = other[i];
     }
 
 
@@ -76,7 +78,7 @@ mBoard & mBoard::operator= (const mBoard & other)
     return *this;
 }
 
-cells & mBoard::at(const int i)
+cells & mBoard::at(const int i) const
 {
     return boardState[i];
 }
@@ -174,7 +176,7 @@ bool mBoard::hasMovesA() const
     // Skip the bank cell at the end of the list.
     for(size_t i = 0; i < (len -1); ++i)
     {
-        if(cellsA[i].marbleNum != 0)
+        if(cellsA[i].marbelNum != 0)
             return true;
     }
 
@@ -189,7 +191,7 @@ bool mBoard::hasMovesB() const
     // Skip the bank cell at the end of the list.
     for(size_t i = 0; i < (len -1); ++i)
     {
-        if(cellsB[i].marbleNum != 0)
+        if(cellsB[i].marbelNum != 0)
             return true;
     }
 

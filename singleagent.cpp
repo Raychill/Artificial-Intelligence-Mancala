@@ -10,6 +10,11 @@ agent::agent(mBoard &game)
 
 }
 
+agent::~agent()
+{
+
+}
+
 
 int agent::getNextMove(void )
 {
@@ -23,9 +28,10 @@ int agent::getMinMove(void)
 
     vector<cells> moves;
     //if statement to toggle who plays
-    moves = getMinMax(A);
+    moves = getMinMax('A');
     int min = moves[0].marbelNum;
-    for(; !moves[i].isBank; i = (i + 1) % cellCount){
+
+    for(int i = 0; i < moves.size();i++){
         if(min > moves[i].marbelNum)
             min = moves[i].marbelNum;
         if(min == moves[i].marbelNum)
@@ -41,12 +47,12 @@ int agent::getMaxMove(void)
 
     vector<cells> moves;
     //if statement to toggle who plays
-    moves = getMinMax(A);
+    moves = getMinMax('A');
     int max = moves[0].marbelNum;
-    for(; !moves[i].isBank; i = (i + 1) % cellCount){
+    for(int i = 0; i < moves.size();i++){
         if(max < moves[i].marbelNum)
             max = moves[i].marbelNum;
-        if(max == moves[i].mmarbelNum)
+        if(max == moves[i].marbelNum)
             max = moves[i].marbelNum;
 
 

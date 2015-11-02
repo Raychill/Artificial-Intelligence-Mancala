@@ -6,6 +6,7 @@
 #include <QButtonGroup>
 
 mBoard board(14, 0, 7);
+//Board agentGame = board;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -46,6 +47,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionDualPlayers_triggered()
 {
+    mode = DUALPLAYER;
     board.setNewGame();
     updateButtons();
     setEnabledButtonSetA(true);
@@ -54,11 +56,19 @@ void MainWindow::on_actionDualPlayers_triggered()
 
 void MainWindow::on_actionSinglePlayer_triggered()
 {
+    mode = SINGLE;
     agent mAgent(board);
     board.setNewGame();
-    setAgentGame(-1,-1);
+   // setAgentGame(-1,-1);
     setEnabledButtonSetA(true);
     setEnabledButtonSetB(false);
+}
+
+void MainWindow::on_actionDualAgents_triggered()
+{
+    mode = DUALAGENT;
+
+
 }
 
 
@@ -250,10 +260,9 @@ void MainWindow::updateGameState(const unsigned int key, const unsigned int bank
 
 }
 
-void MainWindow::setAgentGame(mBoard &board,const int key,const int bankKey)
+void MainWindow::setAgentGame(const int key,const int bankKey)
 {
-  /* // agent mAgent(board);
-    if(board.updateBoard(key,bankKey) == true){
+  if(board.updateBoard(key,bankKey) == true){
         if(key < board.size()/2){
             setEnabledButtonSetB(false);
             setEnabledButtonSetA(true);
@@ -263,7 +272,7 @@ void MainWindow::setAgentGame(mBoard &board,const int key,const int bankKey)
 
             setEnabledButtonSetA(false);
             setEnabledButtonSetB(true);
-            mAgent.getMaxMove();
+           // mAgent.getMaxMove();
         }
 
     }
@@ -277,10 +286,11 @@ void MainWindow::setAgentGame(mBoard &board,const int key,const int bankKey)
         if(key > board.size()/2){
             setEnabledButtonSetA(true);
             setEnabledButtonSetB(false);
-            mAgent.getMaxMove();
+          // mAgent.getMaxMove();
         }
     }
     updateButtons();
-*/
+
 
 }
+

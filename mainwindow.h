@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include"mBoard.h"
 namespace Ui {
 class MainWindow;
 }
@@ -15,15 +15,18 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
-
+private:
+    enum gameMode{SINGLE, DUALPLAYER, DUALAGENT, INVALID };
+    gameMode mode;
 private slots:
+
 
     void updateButtons();
     void updateGameState(const unsigned int key, const unsigned int bankKey);
     void setEnabledButtonSetA(const bool b);
     void setEnabledButtonSetB(const bool b);
-    void setAgentGame(mBoard &board,const int key, const int bankKey);
-
+    void setAgentGame(const int key, const int bankKey);
+   // void setGameState(gameMode currentGame);
     void on_actionDualPlayers_triggered();
 
 
@@ -42,6 +45,8 @@ private slots:
     void on_pushButton_14_clicked();
 
     void on_actionSinglePlayer_triggered();
+
+    void on_actionDualAgents_triggered();
 
 private:
     Ui::MainWindow *ui;

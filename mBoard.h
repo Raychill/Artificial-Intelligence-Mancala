@@ -31,9 +31,9 @@ public:
     mBoard(const mBoard & other);
     ~mBoard();
 
-    cells & operator[](const int i);
+    cells & operator[](const int i) const;
     mBoard & operator= (const mBoard &);
-    cells & at(const int i);
+    cells & at(const int i) const ;
     size_t size(void);
 
     void setNewGame();

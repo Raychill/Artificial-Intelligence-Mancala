@@ -331,25 +331,6 @@ void MainWindow::Single_updateGameState(const unsigned int key)
 
 void MainWindow::dualAgent_updateGameState()
 {
-<<<<<<< HEAD
-    setEnabledButtonSetA(true);
-    setEnabledButtonSetB(true);
-while(board.hasMovesA() && board.hasMovesB()){
-    setEnabledButtonSetA(true);
-    setEnabledButtonSetB(true);
-    bool aiGoAgain = false;
-    do{
-        aiGoAgain = board.updateBoard(myAi(),7);
-        updateButtons();
-    }
-    while(aiGoAgain);
-
-    do{
-        aiGoAgain = board.updateBoard(myAi(),0);
-        updateButtons();
-    }while(aiGoAgain);
-updateButtons();
-=======
     bool again = false;
 
     while(!board.isGameOver())
@@ -375,7 +356,7 @@ updateButtons();
 
     board.flush();
     updateButtons();
->>>>>>> d251565acd58c45229afbd9aaea49b359557e64f
+
 
 } // End of dualAgent_updateGameState().
 

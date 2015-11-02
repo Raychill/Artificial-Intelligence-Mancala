@@ -208,7 +208,6 @@ void MainWindow::dualPlayer_updateGameState(const unsigned int key, const unsign
             setEnabledButtonSetB(false);
         }
     }
-    updateButtons();
 }
 void MainWindow::Single_updateGameState(const unsigned int key)
 {

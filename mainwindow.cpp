@@ -280,3 +280,24 @@ void MainWindow::dualPlayer_updateGameState(const unsigned int key, const unsign
         }
     }
 }
+
+int MainWindow::myAi()
+{
+    unsigned int max = 0;
+    unsigned int maxIndex = 0;
+    std::vector<cells> cList = board.getAr();
+
+    for(size_t i = 0; i < cList.size()-1; ++i)
+    {
+        if(cList[i].marbelNum == (i +1))
+            return cList[i].cellNum;
+
+        if(cList[i].marbelNum > max)
+        {
+            max = cList[i].marbelNum;
+            maxIndex = cList[i].cellNum;
+        }
+    }
+
+    return maxIndex;
+}

@@ -20,7 +20,26 @@ mBoard::mBoard(const unsigned int cellCount,
     boardState[bankkeyA].isBank = true;
     boardState[bankkeyB].isBank = true;
 
+
 }
+
+mBoard::mBoard(const mBoard & other):cellCount(other->cellCount),bankkeyA(other->bankkeyA),bankkeyB(other->bankkeyB)
+{
+
+    boardState = new cells[other->cellCount];
+
+    for(size_t i = 0; i < cellCount; ++i)
+    {
+        boardState[i] = other->at(i);
+    }
+
+
+    // Set the bank cell flags.
+    boardState[bankkeyA].isBank = true;
+    boardState[bankkeyB].isBank = true;
+}
+
+
 //----------------------------------------------------
 mBoard::~mBoard()
 {
@@ -31,6 +50,30 @@ mBoard::~mBoard()
 cells & mBoard::operator[](const int i)
 {
     return boardState[i];
+}
+
+// TDDO: I don't know if this is good. Please Test!!
+mBoard & mBoard::operator= (const mBoard & other)
+{
+    delete[] boardState;
+
+    boardState = new cells[other->cellCount];
+
+    cellCount = other->cellCount;
+    bankkeyA = other->bankkeyA;
+    bankkeyB = other->bankkeyB;
+
+    for(size_t i = 0; i < cellCount; ++i)
+    {
+        boardState[i] = other->at(i);
+    }
+
+
+    // Set the bank cell flags.
+    boardState[bankkeyA].isBank = true;
+    boardState[bankkeyB].isBank = true;
+
+    return *this;
 }
 
 cells & mBoard::at(const int i)

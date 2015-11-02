@@ -28,9 +28,11 @@ public:
     mBoard(const unsigned int cellCount,
            const unsigned int bankkeyA,
            const unsigned int bankkeyB);
+    mBoard(const mBoard & other);
     ~mBoard();
 
     cells & operator[](const int i);
+    mBoard & operator= (const mBoard &);
     cells & at(const int i);
     size_t size(void);
 

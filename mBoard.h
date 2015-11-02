@@ -23,7 +23,11 @@ private:
     const unsigned int bankkeyB;
 
 
+
+
 public:
+
+    void debug();
 
     mBoard(const unsigned int cellCount,
            const unsigned int bankkeyA,
@@ -49,6 +53,8 @@ public:
     std::vector<cells> getA() const;
     std::vector<cells> getB() const;
 
+    std::vector<cells> getAr() const;
+    std::vector<cells> getBr() const;
 
 }; // End of mBoard class.
 

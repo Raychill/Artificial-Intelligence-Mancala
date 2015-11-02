@@ -3,6 +3,23 @@
 #include "mBoard.h"
 #include "cells.h"
 
+#include <algorithm>
+
+#include <QDebug>
+
+
+void mBoard::debug()
+{
+
+    std::vector<cells> cList = getBr();
+
+
+    for(int i = 0; i < cList.size(); ++i)
+    {
+        qDebug() << cList[i].cellNum << "  " << cList[i].marbelNum;
+    }
+
+}
 
 
 //----------------------------------------------------
@@ -205,6 +222,19 @@ bool mBoard::hasMovesB() const
 
 } // End of hasMovesB().
 
+std::vector<cells> mBoard::getA() const
+{
+    std::vector<cells> listCells;
+
+    int i = 8;
+    for(; !(boardState[i].isBank); i = (i + 1) % cellCount)
+        listCells.push_back(boardState[i]);
+
+    // Add the bank to the list.
+    listCells.push_back(boardState[bankkeyA]);
+
+    return listCells;
+}
 
 std::vector<cells> mBoard::getB() const
 {
@@ -220,7 +250,8 @@ std::vector<cells> mBoard::getB() const
     return listCells;
 }
 
-std::vector<cells> mBoard::getA() const
+
+std::vector<cells> mBoard::getAr() const
 {
     std::vector<cells> listCells;
 
@@ -228,8 +259,26 @@ std::vector<cells> mBoard::getA() const
     for(; !(boardState[i].isBank); i = (i + 1) % cellCount)
         listCells.push_back(boardState[i]);
 
+    std::reverse(listCells.begin(), listCells.end());
+
     // Add the bank to the list.
     listCells.push_back(boardState[bankkeyA]);
+
+    return listCells;
+}
+
+std::vector<cells> mBoard::getBr() const
+{
+    std::vector<cells> listCells;
+
+    int i = 1;
+    for(; !boardState[i].isBank; i = (i + 1) % cellCount)
+        listCells.push_back(boardState[i]);
+
+    std::reverse(listCells.begin(), listCells.end());
+
+    // Add the bank to the list.
+    listCells.push_back(boardState[bankkeyB]);
 
     return listCells;
 }

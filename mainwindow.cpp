@@ -52,6 +52,8 @@ void MainWindow::on_actionDualPlayers_triggered()
     updateButtons();
     setEnabledButtonSetA(true);
     setEnabledButtonSetB(false);
+
+    board.debug();
 }
 
 void MainWindow::on_actionSinglePlayer_triggered()

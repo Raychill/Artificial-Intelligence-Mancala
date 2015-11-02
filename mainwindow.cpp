@@ -174,7 +174,7 @@ void MainWindow::updateButtons()
         QString s = QString::number(i);
         board[index].button->setText(s);
         board[index].button->repaint();
-        usleep(10500);
+        usleep(10000);
 
     }
 
@@ -188,11 +188,9 @@ void MainWindow::updateButtons(const int start)
     {
         board[i].button->setText(QString::number(board[i].marbelNum));
         board[i].button->repaint();
-        usleep(10500);
-
+        usleep(10000);
     }
-
-}
+} // End of updateButtons().
 
 
 void MainWindow::updateGameState(const unsigned int key, const unsigned int bankKey)
@@ -207,8 +205,7 @@ void MainWindow::updateGameState(const unsigned int key, const unsigned int bank
     {
         Single_updateGameState(key);
     }
-
-}
+} // End of updateGameState().
 
 
 void MainWindow::dualPlayer_updateGameState(const unsigned int key, const unsigned int bankKey)
@@ -237,7 +234,7 @@ void MainWindow::dualPlayer_updateGameState(const unsigned int key, const unsign
         }
     }
     updateButtons(key);
-}
+} // End of dualPlayer_updateGameState().
 
 
 
@@ -245,9 +242,7 @@ int MainWindow::myAi()
 {
     unsigned int max = 0;
     unsigned int maxIndex = 0;
-
     int  nonZeroIndex1st = -1;
-
     std::vector<cells> cList = board.getAr();
 
     for(size_t i = 0; i < cList.size()-1; ++i)
@@ -255,27 +250,28 @@ int MainWindow::myAi()
         if(cList[i].marbelNum == (i +1))
             return cList[i].cellNum;
 
+        // Find the cell with the more marbles.
         if(cList[i].marbelNum > max)
         {
             max = cList[i].marbelNum;
             maxIndex = cList[i].cellNum;
         }
 
+        // Find the first non zero cell.
         if(nonZeroIndex1st == -1 && cList[i].marbelNum > 0)
             nonZeroIndex1st = cList[i].cellNum;
-
     }
 
+    // 50:50 of max or first non zero.
     return (rand() % 2) ? maxIndex : nonZeroIndex1st;
-}
+
+} // End of myAi().
 
 int MainWindow::myAiB()
 {
     unsigned int max = 0;
     unsigned int maxIndex = 0;
-
     int  nonZeroIndex1st = -1;
-
     std::vector<cells> cList = board.getBr();
 
     for(size_t i = 0; i < cList.size()-1; ++i)
@@ -283,31 +279,35 @@ int MainWindow::myAiB()
         if(cList[i].marbelNum == (i +1))
             return cList[i].cellNum;
 
+        // Find the cell with the more marbles.
         if(cList[i].marbelNum > max)
         {
             max = cList[i].marbelNum;
             maxIndex = cList[i].cellNum;
         }
 
+        // Find the first non zero cell.
         if(nonZeroIndex1st == -1 && cList[i].marbelNum > 0)
             nonZeroIndex1st = cList[i].cellNum;
-
     }
 
+    // 50:50 of max or first non zero.
     return (rand() % 2) ? maxIndex : nonZeroIndex1st;
-}
+
+} // End of myAiB().
 
 
 
 void MainWindow::Single_updateGameState(const unsigned int key)
 {
-
+    // Player moves.
     if(board.updateBoard(key, 7) == true)
     {
         updateButtons(key);
     }
     else
     {
+        // AI action!
         bool aiGoAgain = false;
 
         do
@@ -318,7 +318,6 @@ void MainWindow::Single_updateGameState(const unsigned int key)
 
 
         } while(aiGoAgain && !board.isGameOver());
-
     }
 
     if(board.isGameOver())
@@ -327,14 +326,15 @@ void MainWindow::Single_updateGameState(const unsigned int key)
         updateButtons();
     } else
         enableB();
-}
+
+} // End of Single_updateGameState().
+
 void MainWindow::dualAgent_updateGameState()
 {
     bool again = false;
 
     while(!board.isGameOver())
     {
-
         do
         {
             int aiMove = myAi();
@@ -357,25 +357,25 @@ void MainWindow::dualAgent_updateGameState()
     board.flush();
     updateButtons();
 
-}
+} // End of dualAgent_updateGameState().
 
 void MainWindow::enableA()
 {
     setEnabledButtonSetA(true);
     disableZero();
-}
+} // End of enableA().
 
 void MainWindow::enableB()
 {
     setEnabledButtonSetB(true);
     disableZero();
-}
+} // End of enableB().
 
 void MainWindow::disableAll()
 {
     setEnabledButtonSetA(false);
     setEnabledButtonSetB(false);
-}
+} // End of disableAll().
 
 void MainWindow::disableZero()
 {
@@ -389,6 +389,6 @@ void MainWindow::disableZero()
             board[index].button->repaint();
         }
     }
-}
+} // End of disableZero().
 
 

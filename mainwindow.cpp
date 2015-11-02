@@ -155,6 +155,7 @@ void MainWindow::updateButtons()
         QString s = QString::number(i);
         board[index].button->setText(s);
 
+        // Disable cell that are banks or have no marbles.
         if(board[index].marbelNum == 0 || board[index].isBank)
         {
             board[index].button->setEnabled(false);
@@ -173,33 +174,13 @@ void MainWindow::updateGameState(const unsigned int key, const unsigned int bank
     // if key > boardsize/2 (A is shown)
     // setEnabledButtonSetA/b(t/f);
     //updateButtons();
-if(mode == DUALPLAYER){
-    if(board.updateBoard(key,bankKey) == true ){
-        if(key < board.size()/2){
-            setEnabledButtonSetB(false);
-            setEnabledButtonSetA(true);
 
-        }
-        if(key > board.size()/2){
-            setEnabledButtonSetA(false);
-            setEnabledButtonSetB(true);
-        }
-
-    }
-    else
+    if(mode == DUALPLAYER)
     {
-        if(key < board.size()/2){
-            setEnabledButtonSetB(true);
-            setEnabledButtonSetA(false);
-
-        }
-        if(key > board.size()/2){
-            setEnabledButtonSetA(true);
-            setEnabledButtonSetB(false);
-        }
+        dualPlayer_updateGameState(key, bankKey);
     }
-    updateButtons();
-}
+
+
 if(mode == SINGLE){
     if(board.updateBoard(key,bankKey) == true ){
        /* if(key < board.size()/2){
@@ -230,10 +211,13 @@ if(mode == SINGLE){
 updateButtons();
 }
 
+<<<<<<< HEAD
 updateButtons();
 
 
 
+=======
+>>>>>>> d15b9a3bf1c492ad14e0e6b2da2c0055151e1ea8
 }
 //void Mainwindow::gameState
 /*void MainWindow::setAgentGame(const int key,const int bankKey)
@@ -270,3 +254,35 @@ updateButtons();
 
 }
 */
+
+
+void MainWindow::dualPlayer_updateGameState(const unsigned int key, const unsigned int bankKey)
+{
+    if(board.updateBoard(key,bankKey) == true )
+    {
+        if(key < board.size()/2)
+        {
+            setEnabledButtonSetB(false);
+            setEnabledButtonSetA(true);
+        }
+        else /*if(key > board.size()/2)*/
+        {
+            setEnabledButtonSetA(false);
+            setEnabledButtonSetB(true);
+        }
+    }
+    else
+    {
+        if(key < board.size()/2)
+        {
+            setEnabledButtonSetB(true);
+            setEnabledButtonSetA(false);
+        }
+        else /*if(key > board.size()/2)*/
+        {
+            setEnabledButtonSetA(true);
+            setEnabledButtonSetB(false);
+        }
+    }
+    updateButtons();
+}

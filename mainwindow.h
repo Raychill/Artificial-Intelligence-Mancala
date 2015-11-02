@@ -18,6 +18,10 @@ public:
 private:
     enum gameMode{SINGLE, DUALPLAYER, DUALAGENT, INVALID };
     gameMode mode;
+
+
+    void dualPlayer_updateGameState(const unsigned int key, const unsigned int bankKey);
+
 private slots:
 
 
@@ -47,6 +51,9 @@ private slots:
     void on_actionSinglePlayer_triggered();
 
     void on_actionDualAgents_triggered();
+
+
+
 
 private:
     Ui::MainWindow *ui;

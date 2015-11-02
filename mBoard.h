@@ -27,8 +27,6 @@ private:
 
 public:
 
-    void debug();
-
     mBoard(const unsigned int cellCount,
            const unsigned int bankkeyA,
            const unsigned int bankkeyB);

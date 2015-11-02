@@ -5,21 +5,6 @@
 
 #include <algorithm>
 
-#include <QDebug>
-
-
-void mBoard::debug()
-{
-
-    std::vector<cells> cList = getBr();
-
-
-    for(int i = 0; i < cList.size(); ++i)
-    {
-        qDebug() << cList[i].cellNum << "  " << cList[i].marbelNum;
-    }
-
-}
 
 
 //----------------------------------------------------
@@ -199,7 +184,7 @@ bool mBoard::hasMovesA() const
     // Skip the bank cell at the end of the list.
     for(size_t i = 0; i < (len -1); ++i)
     {
-        if(cellsA[i].marbelNum != 0)
+        if(cellsA[i].marbelNum > 0)
             return true;
     }
 
@@ -208,13 +193,13 @@ bool mBoard::hasMovesA() const
 
 bool mBoard::hasMovesB() const
 {
-    const std::vector<cells> cellsB = getA();
+    const std::vector<cells> cellsB = getB();
     const size_t len = cellsB.size();
 
     // Skip the bank cell at the end of the list.
     for(size_t i = 0; i < (len -1); ++i)
     {
-        if(cellsB[i].marbelNum != 0)
+        if(cellsB[i].marbelNum > 0)
             return true;
     }
 

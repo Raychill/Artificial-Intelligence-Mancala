@@ -40,7 +40,9 @@ public:
     bool updateBoard(const unsigned int key,
                      const unsigned int bankkey);
 
-    bool isGameOver();
+    bool isGameOver() const;
+    bool hasMovesA() const;
+    bool hasMovesB() const;
 
     std::vector<cells> getA() const;
     std::vector<cells> getB() const;

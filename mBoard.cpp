@@ -117,22 +117,42 @@ bool mBoard::updateBoard(const unsigned int key, const unsigned int bankkey)
 } // End of updateBoard().
 
 
-bool mBoard::isGameOver()
+bool mBoard::isGameOver() const
 {
-    for(unsigned int i = 0; i < cellCount; ++i)
-    {
-        // Don't count the banks.
-        if(i == bankkeyA || i == bankkeyB)
-            continue;
-        // If any cells have any marbles, then the game is not over.
-        else if(boardState[i].marbelNum != 0)
-            return false;
-    }
-
-    return true;
+    return !hasMovesA() || !hasMovesB();
 
 } // End of isGameOver().
 
+bool mBoard::hasMovesA() const
+{
+    const std::vector<cells> cellsA = getA();
+    const size_t len = cellsA.size();
+
+    // Skip the bank cell at the end of the list.
+    for(size_t i = 0; i < (len -1); ++i)
+    {
+        if(cellsA[i].marbleNum != 0)
+            return true;
+    }
+
+    return false;
+} // End of hasMovesA().
+
+bool mBoard::hasMovesB() const
+{
+    const std::vector<cells> cellsB = getA();
+    const size_t len = cellsB.size();
+
+    // Skip the bank cell at the end of the list.
+    for(size_t i = 0; i < (len -1); ++i)
+    {
+        if(cellsB[i].marbleNum != 0)
+            return true;
+    }
+
+    return false;
+
+} // End of hasMovesB().
 
 
 std::vector<cells> mBoard::getA() const

@@ -64,6 +64,12 @@ private:
     int myAi();
     int myAiB();
 
+    void enableA();
+    void enableB();
+
+    void disableAll();
+    void disableZero();
+
 };
 
 #endif // MAINWINDOW_H

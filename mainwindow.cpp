@@ -5,6 +5,8 @@
 #include "singleagent.h"
 #include <QButtonGroup>
 #include <unistd.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include <QDebug>
 
@@ -41,6 +43,8 @@ MainWindow::MainWindow(QWidget *parent) :
     board[12].button = ui->pushButton_13;
     board[13].button = ui->pushButton_14;
 
+    srand (time(NULL));
+
 }
 
 MainWindow::~MainWindow()
@@ -51,47 +55,54 @@ MainWindow::~MainWindow()
 void MainWindow::on_actionDualPlayers_triggered()
 {
     mode = DUALPLAYER;
+
+    // Reset the board.
     board.setNewGame();
     updateButtons();
-    setEnabledButtonSetA(true);
-    setEnabledButtonSetB(false);
 
-    board.debug();
-}
+    (rand() % 2) ? enableA() : enableB();
+
+} // End of on_actionDualPlayers_triggered().
 
 void MainWindow::on_actionSinglePlayer_triggered()
 {
     mode = SINGLE;
 
+    // Reset the board.
     board.setNewGame();
     updateButtons();
-   // agent mAgent(board);
-   // setAgentGame(-1,-1);
-    setEnabledButtonSetA(true);
-    setEnabledButtonSetB(false);
-}
+
+    enableB();
+
+} // End of on_actionSinglePlayer_triggered().
 
 void MainWindow::on_actionDualAgents_triggered()
 {
     mode = DUALAGENT;
+
+    // Disable all botton.
+    disableAll();
+
+    // Reset the board.
     board.setNewGame();
-    dualAgent_updateGameState();
     updateButtons();
 
+    // Start the game with two AI.
+    dualAgent_updateGameState();
 
-}
+} // End of on_actionDualAgents_triggered().
 
 
 void MainWindow::setEnabledButtonSetA(const bool b)
 {
-    foreach(QAbstractButton *button, ui->buttonGroup->buttons())
+    foreach(QAbstractButton *button, ui->buttonGroup_2->buttons())
         button->setEnabled(b);
 
 } // End of setEnabledButtonSetA().
 
 void MainWindow::setEnabledButtonSetB(const bool b)
 {
-    foreach(QAbstractButton *button, ui->buttonGroup_2->buttons())
+    foreach(QAbstractButton *button, ui->buttonGroup->buttons())
         button->setEnabled(b);
 
 } // End setEnabledButtonSetB().
@@ -162,16 +173,6 @@ void MainWindow::updateButtons()
         int i = board[index].marbelNum;
         QString s = QString::number(i);
         board[index].button->setText(s);
-
-
-
-        // Disable cell that are banks or have no marbles.
-        if(board[index].marbelNum == 0 || board[index].isBank)
-        {
-            board[index].button->setEnabled(false);
-        }
-
-
         board[index].button->repaint();
         usleep(10500);
 
@@ -186,11 +187,6 @@ void MainWindow::updateButtons(const int start)
     for(i = (start+1) % board.size(); i != start; i = (i +1) % board.size())
     {
         board[i].button->setText(QString::number(board[i].marbelNum));
-
-        // Disable cell that are banks or have no marbles.
-        if(board[i].marbelNum == 0 || board[i].isBank)
-            board[i].button->setEnabled(false);
-
         board[i].button->repaint();
         usleep(10500);
 
@@ -201,6 +197,7 @@ void MainWindow::updateButtons(const int start)
 
 void MainWindow::updateGameState(const unsigned int key, const unsigned int bankKey)
 {
+    disableAll();
 
     if(mode == DUALPLAYER)
     {
@@ -210,42 +207,36 @@ void MainWindow::updateGameState(const unsigned int key, const unsigned int bank
     {
         Single_updateGameState(key);
     }
-    else if(mode == DUALAGENT)
-    {
-        dualAgent_updateGameState();
-    }
-    updateButtons();
+
 }
 
 
 void MainWindow::dualPlayer_updateGameState(const unsigned int key, const unsigned int bankKey)
 {
+    // Test to go again.
     if(board.updateBoard(key,bankKey) == true )
     {
         if(key < board.size()/2)
         {
-            setEnabledButtonSetB(false);
-            setEnabledButtonSetA(true);
+            enableB();
         }
-        else /*if(key > board.size()/2)*/
+        else
         {
-            setEnabledButtonSetA(false);
-            setEnabledButtonSetB(true);
+            enableA();
         }
     }
-    else
+    else // It's the other player's turn.
     {
         if(key < board.size()/2)
         {
-            setEnabledButtonSetB(true);
-            setEnabledButtonSetA(false);
+            enableA();
         }
-        else /*if(key > board.size()/2)*/
+        else
         {
-            setEnabledButtonSetA(true);
-            setEnabledButtonSetB(false);
+            enableB();
         }
     }
+    updateButtons(key);
 }
 
 
@@ -254,6 +245,9 @@ int MainWindow::myAi()
 {
     unsigned int max = 0;
     unsigned int maxIndex = 0;
+
+    int  nonZeroIndex1st = -1;
+
     std::vector<cells> cList = board.getAr();
 
     for(size_t i = 0; i < cList.size()-1; ++i)
@@ -266,15 +260,22 @@ int MainWindow::myAi()
             max = cList[i].marbelNum;
             maxIndex = cList[i].cellNum;
         }
+
+        if(nonZeroIndex1st == -1 && cList[i].marbelNum > 0)
+            nonZeroIndex1st = cList[i].cellNum;
+
     }
 
-    return maxIndex;
+    return (rand() % 2) ? maxIndex : nonZeroIndex1st;
 }
 
 int MainWindow::myAiB()
 {
     unsigned int max = 0;
     unsigned int maxIndex = 0;
+
+    int  nonZeroIndex1st = -1;
+
     std::vector<cells> cList = board.getBr();
 
     for(size_t i = 0; i < cList.size()-1; ++i)
@@ -287,75 +288,52 @@ int MainWindow::myAiB()
             max = cList[i].marbelNum;
             maxIndex = cList[i].cellNum;
         }
+
+        if(nonZeroIndex1st == -1 && cList[i].marbelNum > 0)
+            nonZeroIndex1st = cList[i].cellNum;
+
     }
 
-    return maxIndex;
+    return (rand() % 2) ? maxIndex : nonZeroIndex1st;
 }
 
 
 
 void MainWindow::Single_updateGameState(const unsigned int key)
 {
-    //agent AI(board);
 
     if(board.updateBoard(key, 7) == true)
     {
-
-        if(board.isGameOver())
-            setEnabledButtonSetA(false);
-        else
-            setEnabledButtonSetA(true);
-
-
-        setEnabledButtonSetB(false);
-
         updateButtons(key);
-
-
     }
     else
     {
-
-         bool aiGoAgain = false;
+        bool aiGoAgain = false;
 
         do
         {
-             int aiMove = myAi();
-             aiGoAgain = board.updateBoard(aiMove, 0);
-             updateButtons(aiMove);
+            int aiMove = myAi();
+            aiGoAgain = board.updateBoard(aiMove, 0);
+            updateButtons(aiMove);
 
 
-             if(board.isGameOver())
-             {
-                 qDebug() << "Gameover!!";
-                 board.flush();
-                 updateButtons();
-                 aiGoAgain = false;
-             }
+        } while(aiGoAgain && !board.isGameOver());
 
-
-
-        } while(aiGoAgain);
-
-         if(!board.isGameOver())
-         {
-             setEnabledButtonSetA(true);
-             setEnabledButtonSetB(false);
-         }
     }
 
-
+    if(board.isGameOver())
+    {
+        board.flush();
+        updateButtons();
+    } else
+        enableB();
 }
 void MainWindow::dualAgent_updateGameState()
 {
     bool again = false;
 
-    setEnabledButtonSetA(false);
-    setEnabledButtonSetB(false);
-
     while(!board.isGameOver())
     {
-        qDebug() << "Going!!";
 
         do
         {
@@ -376,8 +354,41 @@ void MainWindow::dualAgent_updateGameState()
         } while(again && !board.isGameOver());
     }
 
-    qDebug() << "Gameover!!";
     board.flush();
     updateButtons();
 
 }
+
+void MainWindow::enableA()
+{
+    setEnabledButtonSetA(true);
+    disableZero();
+}
+
+void MainWindow::enableB()
+{
+    setEnabledButtonSetB(true);
+    disableZero();
+}
+
+void MainWindow::disableAll()
+{
+    setEnabledButtonSetA(false);
+    setEnabledButtonSetB(false);
+}
+
+void MainWindow::disableZero()
+{
+    // Update the text of each GUI button.
+    for(size_t index = 0; index < board.size(); ++index)
+    {
+        // Disable cell that are banks or have no marbles.
+        if(board[index].marbelNum == 0 || board[index].isBank)
+        {
+            board[index].button->setEnabled(false);
+            board[index].button->repaint();
+        }
+    }
+}
+
+

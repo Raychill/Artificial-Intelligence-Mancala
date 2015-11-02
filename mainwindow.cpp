@@ -6,6 +6,8 @@
 #include <QButtonGroup>
 #include <unistd.h>
 
+#include <QDebug>
+
 mBoard board(14, 0, 7);
 //Board agentGame = board;
 
@@ -73,6 +75,7 @@ void MainWindow::on_actionDualAgents_triggered()
 {
     mode = DUALAGENT;
     board.setNewGame();
+    dualAgent_updateGameState();
     updateButtons();
 
 
@@ -209,7 +212,7 @@ void MainWindow::updateGameState(const unsigned int key, const unsigned int bank
     }
     else if(mode == DUALAGENT)
     {
-        dualAgent_updateGameState(key,bankKey);
+        dualAgent_updateGameState();
     }
     updateButtons();
 }
@@ -268,51 +271,113 @@ int MainWindow::myAi()
     return maxIndex;
 }
 
+int MainWindow::myAiB()
+{
+    unsigned int max = 0;
+    unsigned int maxIndex = 0;
+    std::vector<cells> cList = board.getBr();
+
+    for(size_t i = 0; i < cList.size()-1; ++i)
+    {
+        if(cList[i].marbelNum == (i +1))
+            return cList[i].cellNum;
+
+        if(cList[i].marbelNum > max)
+        {
+            max = cList[i].marbelNum;
+            maxIndex = cList[i].cellNum;
+        }
+    }
+
+    return maxIndex;
+}
+
+
+
 void MainWindow::Single_updateGameState(const unsigned int key)
 {
     //agent AI(board);
 
     if(board.updateBoard(key, 7) == true)
     {
-        setEnabledButtonSetA(true);
+
+        if(board.isGameOver())
+            setEnabledButtonSetA(false);
+        else
+            setEnabledButtonSetA(true);
+
+
         setEnabledButtonSetB(false);
+
+        updateButtons(key);
+
+
     }
     else
     {
-       //  agent A(board);
-       //bool aiGoAgain = false;
+
          bool aiGoAgain = false;
 
         do
         {
-
              int aiMove = myAi();
-            aiGoAgain = board.updateBoard(aiMove, 0);
-
+             aiGoAgain = board.updateBoard(aiMove, 0);
              updateButtons(aiMove);
+
+
+             if(board.isGameOver())
+             {
+                 qDebug() << "Gameover!!";
+                 board.flush();
+                 updateButtons();
+                 aiGoAgain = false;
+             }
+
+
+
         } while(aiGoAgain);
-        setEnabledButtonSetA(true);
-        setEnabledButtonSetB(false);
+
+         if(!board.isGameOver())
+         {
+             setEnabledButtonSetA(true);
+             setEnabledButtonSetB(false);
+         }
     }
 
 
 }
-void MainWindow::dualAgent_updateGameState(const unsigned int key, const unsigned int bankKey)
+void MainWindow::dualAgent_updateGameState()
 {
+    bool again = false;
 
-while(board.hasMovesA() && board.hasMovesB()){
-bool aiGoAgain = false;
-do{
-    aiGoAgain = board.updateBoard(myAi(),7);
+    setEnabledButtonSetA(false);
+    setEnabledButtonSetB(false);
+
+    while(!board.isGameOver())
+    {
+        qDebug() << "Going!!";
+
+        do
+        {
+            int aiMove = myAi();
+            again = board.updateBoard(aiMove, 0);
+            updateButtons(aiMove);
+
+
+        } while(again && !board.isGameOver());
+
+        do
+        {
+            int aiMove = myAiB();
+            again = board.updateBoard(aiMove, 7);
+            updateButtons(aiMove);
+
+
+        } while(again && !board.isGameOver());
+    }
+
+    qDebug() << "Gameover!!";
+    board.flush();
     updateButtons();
-}
-while(aiGoAgain);
 
-do{
-    aiGoAgain = board.updateBoard(myAi(),0);
-    updateButtons();
-}while(aiGoAgain);
-
-}
-updateButtons();
 }

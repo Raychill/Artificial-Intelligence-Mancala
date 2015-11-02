@@ -22,7 +22,7 @@ private:
 
     void dualPlayer_updateGameState(const unsigned int key, const unsigned int bankKey);
     void Single_updateGameState(const unsigned int key);
-    void dualAgent_updateGameState(const unsigned int key, const unsigned int bankKey);
+    void dualAgent_updateGameState();
 
 private slots:
 
@@ -62,6 +62,7 @@ private:
     Ui::MainWindow *ui;
 
     int myAi();
+    int myAiB();
 
 };
 

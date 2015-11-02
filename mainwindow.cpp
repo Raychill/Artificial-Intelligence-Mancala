@@ -4,6 +4,7 @@
 #include "cells.h"
 #include "singleagent.h"
 #include <QButtonGroup>
+#include <unistd.h>
 
 mBoard board(14, 0, 7);
 //Board agentGame = board;
@@ -157,11 +158,20 @@ void MainWindow::updateButtons()
         QString s = QString::number(i);
         board[index].button->setText(s);
 
+
+
         // Disable cell that are banks or have no marbles.
         if(board[index].marbelNum == 0 || board[index].isBank)
         {
             board[index].button->setEnabled(false);
         }
+
+
+        board[index].button->repaint();
+        usleep(10500);
+
+
+
     }
 
 

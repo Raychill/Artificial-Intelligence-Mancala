@@ -108,22 +108,28 @@ void mBoard :: setNewGame()
 
 void mBoard::flush(void) const
 {
-    std::vector<cells> cellsA = getA();
-    std::vector<cells> cellsB = getB();
 
-    const size_t len = cellsA.size();
-
-    // For All the cells A or B without the banks cells.
-    for(size_t i = 0; i < len -1; ++i)
+    for(size_t i = 0; i < cellCount; ++i)
     {
-        // Add all the marbels to bank A.
-        cellsA.back().marbelNum += cellsA[i].marbelNum;
-        cellsA[i].marbelNum = 0;
+        // Skip banks cells.
+        if(i == bankkeyA || i == bankkeyB)
+            continue;
 
-        // Add all the marbels to bank B.
-        cellsB.back().marbelNum += cellsB[i].marbelNum;
-        cellsB[i].marbelNum = 0;
+        if(i > bankkeyB)
+        {
+            // Adding to bank A.
+            boardState[bankkeyA].marbelNum += boardState[i].marbelNum;
+
+        } else
+        {
+            // Adding to bank B.
+            boardState[bankkeyB].marbelNum += boardState[i].marbelNum;
+        }
+
+        // Clear the cell.
+        boardState[i].marbelNum = 0;
     }
+
 } // End of flush().
 
 
@@ -209,7 +215,7 @@ std::vector<cells> mBoard::getA() const
         listCells.push_back(boardState[i]);
 
     // Add the bank to the list.
-    listCells.push_back(boardState[i]);
+    listCells.push_back(boardState[bankkeyA]);
 
     return listCells;
 }
@@ -223,7 +229,7 @@ std::vector<cells> mBoard::getB() const
         listCells.push_back(boardState[i]);
 
     // Add the bank to the list.
-    listCells.push_back(boardState[i]);
+    listCells.push_back(boardState[bankkeyB]);
 
     return listCells;
 }

@@ -88,122 +88,60 @@ void MainWindow::setEnabledButtonSetB(const bool b)
 
 
 
-
 void MainWindow::on_pushButton_2_clicked()
 {
-     updateGameState(1,7);
-   /* board.updateBoard(1, 7);
-    setEnabledButtonSetA(false);
-    setEnabledButtonSetB(true);
-    updateButtons();*/
+    updateGameState(1,7);
 }
-
 void MainWindow::on_pushButton_3_clicked()
 {
-     updateGameState(2,7);
-   /* board.updateBoard(2, 7);
-    setEnabledButtonSetA(false);
-    setEnabledButtonSetB(true);
-    updateButtons();*/
+    updateGameState(2,7);
 }
-
 void MainWindow::on_pushButton_4_clicked()
 {
     updateGameState(3,7);
-   /* board.updateBoard(3, 7);
-    setEnabledButtonSetA(false);
-    setEnabledButtonSetB(true);
-    updateButtons();*/
 }
-
 void MainWindow::on_pushButton_5_clicked()
 {
     updateGameState(4,7);
-   /* board.updateBoard(4, 7);
-    setEnabledButtonSetA(false);
-    setEnabledButtonSetB(true);
-    updateButtons();*/
 }
-
 void MainWindow::on_pushButton_6_clicked()
 {
     updateGameState(5,7);
-   /* board.updateBoard(5, 7);
-    setEnabledButtonSetA(false);
-    setEnabledButtonSetB(true);
-    updateButtons();*/
 }
-
 void MainWindow::on_pushButton_7_clicked()
 {
    updateGameState(6,7);
-    // this is a bank.
-    updateButtons();
-
-
 }
-
 void MainWindow::on_pushButton_8_clicked()
 {
     updateGameState(7,0);
-    /*board.updateBoard(7, 0);
-    setEnabledButtonSetA(false);
-    setEnabledButtonSetB(true);
-    updateButtons();*/
 }
 void MainWindow::on_pushButton_9_clicked()
 {
     updateGameState(8,0);
-    /*board.updateBoard(8, 0);
-    setEnabledButtonSetA(true);
-    setEnabledButtonSetB(false);
-    updateButtons();*/
 }
-
-
 void MainWindow::on_pushButton_10_clicked()
 {
     updateGameState(9,0);
-    /*board.updateBoard(9, 0);
-    setEnabledButtonSetA(true);
-    setEnabledButtonSetB(false);
-    updateButtons();*/
 }
-
 void MainWindow::on_pushButton_11_clicked()
 {
     updateGameState(10,0);
-   /* board.updateBoard(10, 0);
-    setEnabledButtonSetA(true);
-    setEnabledButtonSetB(false);
-    updateButtons();*/
 }
 
 void MainWindow::on_pushButton_12_clicked()
 {
     updateGameState(11,0);
-   /* board.updateBoard(11, 0);
-    setEnabledButtonSetA(true);
-    setEnabledButtonSetB(false);
-    updateButtons();*/
 }
 
 void MainWindow::on_pushButton_13_clicked()
 {
     updateGameState(12,0);
-    /*board.updateBoard(12, 0);
-    setEnabledButtonSetA(true);
-    setEnabledButtonSetB(false);
-    updateButtons();*/
 }
 
 void MainWindow::on_pushButton_14_clicked()
 {
     updateGameState(13,0);
-    /*board.updateBoard(13, 0);
-    setEnabledButtonSetA(true);
-    setEnabledButtonSetB(false);
-    updateButtons();*/
 }
 
 void MainWindow::updateButtons()
@@ -220,6 +158,7 @@ void MainWindow::updateButtons()
             board[index].button->setEnabled(false);
         }
     }
+
 
 } // End of updateButtons().
 

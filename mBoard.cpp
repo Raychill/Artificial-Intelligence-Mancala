@@ -206,7 +206,7 @@ bool mBoard::hasMovesB() const
 } // End of hasMovesB().
 
 
-std::vector<cells> mBoard::getA() const
+std::vector<cells> mBoard::getB() const
 {
     std::vector<cells> listCells;
 
@@ -215,21 +215,21 @@ std::vector<cells> mBoard::getA() const
         listCells.push_back(boardState[i]);
 
     // Add the bank to the list.
-    listCells.push_back(boardState[bankkeyA]);
+    listCells.push_back(boardState[bankkeyB]);
 
     return listCells;
 }
 
-std::vector<cells> mBoard::getB() const
+std::vector<cells> mBoard::getA() const
 {
     std::vector<cells> listCells;
 
     int i = 8;
-    for(; !boardState[i].isBank; i = (i + 1) % cellCount)
+    for(; !(boardState[i].isBank); i = (i + 1) % cellCount)
         listCells.push_back(boardState[i]);
 
     // Add the bank to the list.
-    listCells.push_back(boardState[bankkeyB]);
+    listCells.push_back(boardState[bankkeyA]);
 
     return listCells;
 }

@@ -28,6 +28,7 @@ private slots:
 
 
     void updateButtons();
+    void updateButtons(const int start);
     void updateGameState(const unsigned int key, const unsigned int bankKey);
     void setEnabledButtonSetA(const bool b);
     void setEnabledButtonSetB(const bool b);

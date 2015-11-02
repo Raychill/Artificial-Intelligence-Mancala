@@ -172,12 +172,29 @@ void MainWindow::updateButtons()
         board[index].button->repaint();
         usleep(10500);
 
+    }
 
+} // End of updateButtons().
+
+void MainWindow::updateButtons(const int start)
+{
+    int i;
+
+    for(i = (start+1) % board.size(); i != start; i = (i +1) % board.size())
+    {
+        board[i].button->setText(QString::number(board[i].marbelNum));
+
+        // Disable cell that are banks or have no marbles.
+        if(board[i].marbelNum == 0 || board[i].isBank)
+            board[i].button->setEnabled(false);
+
+        board[i].button->repaint();
+        usleep(10500);
 
     }
 
+}
 
-} // End of updateButtons().
 
 void MainWindow::updateGameState(const unsigned int key, const unsigned int bankKey)
 {
@@ -269,9 +286,10 @@ void MainWindow::Single_updateGameState(const unsigned int key)
         do
         {
 
-            aiGoAgain = board.updateBoard(myAi(), 0);
+             int aiMove = myAi();
+            aiGoAgain = board.updateBoard(aiMove, 0);
 
-             updateButtons();
+             updateButtons(aiMove);
         } while(aiGoAgain);
         setEnabledButtonSetA(true);
         setEnabledButtonSetB(false);

@@ -210,15 +210,8 @@ if(mode == SINGLE){
 //updateGameState(AI.getMaxMove(),8);
 updateButtons();
 }
-
-<<<<<<< HEAD
-updateButtons();
-
-
-
-=======
->>>>>>> d15b9a3bf1c492ad14e0e6b2da2c0055151e1ea8
 }
+
 //void Mainwindow::gameState
 /*void MainWindow::setAgentGame(const int key,const int bankKey)
 {

@@ -71,6 +71,8 @@ void MainWindow::on_actionSinglePlayer_triggered()
 void MainWindow::on_actionDualAgents_triggered()
 {
     mode = DUALAGENT;
+    board.setNewGame();
+    updateButtons();
 
 
 }
@@ -178,6 +180,10 @@ void MainWindow::updateGameState(const unsigned int key, const unsigned int bank
     {
         Single_updateGameState(key);
     }
+    else if(mode == DUALAGENT)
+    {
+        dualAgent_updateGameState(key,bankKey);
+    }
     updateButtons();
 }
 
@@ -246,7 +252,7 @@ void MainWindow::Single_updateGameState(const unsigned int key)
     }
     else
     {
-       agent A(board);
+       //  agent A(board);
        //bool aiGoAgain = false;
          bool aiGoAgain = false;
 
@@ -262,4 +268,23 @@ void MainWindow::Single_updateGameState(const unsigned int key)
     }
 
 
+}
+void MainWindow::dualAgent_updateGameState(const unsigned int key, const unsigned int bankKey)
+{
+
+while(board.hasMovesA() && board.hasMovesB()){
+bool aiGoAgain = false;
+do{
+    aiGoAgain = board.updateBoard(myAi(),7);
+    updateButtons();
+}
+while(aiGoAgain);
+
+do{
+    aiGoAgain = board.updateBoard(myAi(),0);
+    updateButtons();
+}while(aiGoAgain);
+
+}
+updateButtons();
 }

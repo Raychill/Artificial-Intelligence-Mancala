@@ -19,7 +19,7 @@ agent::~agent()
 int agent::getNextMove(void )
 {
 
-    getMinMove();// or getMaxMove;
+    getMaxMove();// or getMaxMove;
     return 0;
 }
 
@@ -54,11 +54,11 @@ int agent::getMaxMove(void)
         if(max < moves[i].marbelNum)
             index = i;//max = moves[i].marbelNum;
         if(max == moves[i].marbelNum)
-             index = i+8;//max = moves[i].marbelNum;
+             index = i;//max = moves[i].marbelNum;
 
 
     }
-   return index;
+   return index+8;
 
 }
 vector<cells> agent::getMinMax()

@@ -211,7 +211,7 @@ void MainWindow::dualPlayer_updateGameState(const unsigned int key, const unsign
 }
 void MainWindow::Single_updateGameState(const unsigned int key)
 {
-    agent AI(board);
+    //agent AI(board);
 
     if(board.updateBoard(key, 7) == true)
     {
@@ -224,24 +224,25 @@ void MainWindow::Single_updateGameState(const unsigned int key)
 
         do
         {
-            int aiMove = 10;
 
-            vector<cells> cList = board.getB();
+           int aiMove = 10;
+
+            vector<cells> cList = board.getA();
+
 
             // Pick the move!!
             for(int i = 0; i < cList.size();++i)
                 if(cList[i].marbelNum != 0)
                 {
                     aiMove = cList[i].cellNum;
-                    ui->pushButton_15->setText(QString::number(cList[1].cellNum));
+                    ui->pushButton_15->setText(QString::number(cList[i].cellNum));
                     break;
                 }
 
-            aiGoAgain = board.updateBoard(aiMove+7, 0);
+            aiGoAgain = board.updateBoard(aiMove, 0);
+            updateButtons();
         } while(aiGoAgain);
     }
-//updateGameState(AI.getMaxMove(),8);
-
 
 
 }

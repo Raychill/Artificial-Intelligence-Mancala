@@ -313,12 +313,14 @@ void MainWindow::Single_updateGameState(const unsigned int key)
         do
         {
             int aiMove = myAi();
-            aiGoAgain = board.updateBoard(aiMove, 0);
             updateButtons(aiMove);
+            aiGoAgain = board.updateBoard(aiMove, 0);
+            //updateButtons(aiMove);
 
 
         } while(aiGoAgain && !board.isGameOver());
     }
+        updateButtons();
 
     if(board.isGameOver())
     {

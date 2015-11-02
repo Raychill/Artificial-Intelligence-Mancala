@@ -220,12 +220,15 @@ void MainWindow::Single_updateGameState(const unsigned int key)
     }
     else
     {
-        bool aiGoAgain = false;
+       agent A(board);
+       //bool aiGoAgain = false;
+         bool aiGoAgain = false;
 
         do
         {
-
-           int aiMove = 10;
+             aiGoAgain = board.updateBoard(A.getNextMove(),0);
+             ui->pushButton_15->setText(QString::number(A.getNextMove()));
+         /*  int aiMove = 10;
 
             vector<cells> cList = board.getA();
 
@@ -239,9 +242,12 @@ void MainWindow::Single_updateGameState(const unsigned int key)
                     break;
                 }
 
-            aiGoAgain = board.updateBoard(aiMove, 0);
-            updateButtons();
+            aiGoAgain = board.updateBoard(aiMove, 0);*/
+
+             updateButtons();
         } while(aiGoAgain);
+        setEnabledButtonSetA(true);
+        setEnabledButtonSetB(false);
     }
 
 

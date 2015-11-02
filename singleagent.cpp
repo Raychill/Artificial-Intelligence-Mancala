@@ -19,8 +19,8 @@ agent::~agent()
 int agent::getNextMove(void )
 {
 
-    getMaxMove();// or getMaxMove;
-    return 0;
+   // getMaxMove();// or getMaxMove;
+    return getMaxMove();
 }
 
 int agent::getMinMove(void)
@@ -45,20 +45,20 @@ int agent::getMinMove(void)
 int agent::getMaxMove(void)
 {
 
-    vector<cells> moves = getMinMax();
-    int max = moves[0].marbelNum;
-    int index;
+   vector<cells> moves = getMinMax();
+   int max = moves[0].marbelNum;
+   int index = 0;
     for(int i = 0; i < moves.size();i++){
+       // max = moves[i].marbelNum;
         if(moves[i].marbelNum == 0)
-            i++;
+            i++;//prune any 0s
         if(max < moves[i].marbelNum)
-            index = i;//max = moves[i].marbelNum;
-        if(max == moves[i].marbelNum)
-             index = i;//max = moves[i].marbelNum;
+            index = moves[i].cellNum;//max = moves[i].marbelNum;
+        else if(max == moves[i].marbelNum)
+             index = moves[i].cellNum;//max = moves[i].marbelNum;
 
-
-    }
-   return index+8;
+        }
+   return index;
 
 }
 vector<cells> agent::getMinMax()
@@ -67,10 +67,10 @@ vector<cells> A = game-> getA();
 //vector<cells> B = game -> getB();
 int lengthA = game->getA().size();
 int heuristics;
-//vector<int> minMax;
+//vector<cells> Stack;
 for(int i = 0; i < A.size();i++)
 {
-    heuristics = lengthA - A[i].marbelNum;
+    heuristics = lengthA + A[i].marbelNum;
     A[i].marbelNum = heuristics;
 }
 

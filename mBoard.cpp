@@ -5,21 +5,6 @@
 
 #include <algorithm>
 
-#include <QDebug>
-
-
-void mBoard::debug()
-{
-
-    std::vector<cells> cList = getBr();
-
-
-    for(int i = 0; i < cList.size(); ++i)
-    {
-        qDebug() << cList[i].cellNum << "  " << cList[i].marbelNum;
-    }
-
-}
 
 
 //----------------------------------------------------

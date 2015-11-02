@@ -32,6 +32,7 @@ public:
     ~mBoard();
 
     cells & operator[](const int i);
+    cells & at(const int i);
     size_t size(void);
 
     void setNewGame();

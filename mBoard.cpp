@@ -33,6 +33,11 @@ cells & mBoard::operator[](const int i)
     return boardState[i];
 }
 
+cells & mBoard::at(const int i)
+{
+    return boardState[i];
+}
+
 size_t mBoard::size(void)
 {
     return cellCount;

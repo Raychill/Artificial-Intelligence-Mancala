@@ -217,11 +217,12 @@ if(mode == SINGLE){
 
     }
     else
-    {       int index = AI.getMaxMove();
-            board.updateBoard(index,0);
+    {       //int index = AI.getMaxMove();
+            board.updateBoard(AI.getMaxMove(),0);
             setEnabledButtonSetA(true);
             setEnabledButtonSetB(false);
             //int index = AI.getMaxMove();
+            updateButtons();
 
        // }
     }
@@ -229,7 +230,7 @@ if(mode == SINGLE){
 updateButtons();
 }
 
-
+updateButtons();
 
 
 

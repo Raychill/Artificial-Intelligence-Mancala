@@ -28,7 +28,7 @@ int agent::getMinMove(void)
 
     vector<cells> moves;
     //if statement to toggle who plays
-    moves = getMinMax('A');
+    moves = getMinMax();
     int min = moves[0].marbelNum;
 
     for(int i = 0; i < moves.size();i++){
@@ -45,12 +45,12 @@ int agent::getMinMove(void)
 int agent::getMaxMove(void)
 {
 
-    vector<cells> moves = getMinMax('A');
-    //if statement to toggle who plays
- //   moves = getMinMax('A');
+    vector<cells> moves = getMinMax();
     int max = moves[0].marbelNum;
     int index;
     for(int i = 0; i < moves.size();i++){
+        if(moves[i].marbelNum == 0)
+            i++;
         if(max < moves[i].marbelNum)
             index = i;//max = moves[i].marbelNum;
         if(max == moves[i].marbelNum)
@@ -61,28 +61,17 @@ int agent::getMaxMove(void)
    return index;
 
 }
-vector<cells> agent::getMinMax(char player)
+vector<cells> agent::getMinMax()
 {
 vector<cells> A = game-> getA();
-vector<cells> B = game -> getB();
+//vector<cells> B = game -> getB();
 int lengthA = game->getA().size();
-int lengthB = game->getB().size();
-
-//int i = 0;
-if(player == 'A')
+int heuristics;
+//vector<int> minMax;
 for(int i = 0; i < A.size();i++)
 {
-    A[i].marbelNum += A[lengthA].marbelNum - lengthA;
-
-}
-
-//i = 0;
-else//(player == 'B')
-//for(; !B[i].isBank; i = (i + 1) % game->cellCount)
-for(int i = 0; i < B.size();i++)
-{
-    B[i].marbelNum = B[i].marbelNum - lengthB + B[lengthB].marbelNum;
-
+    heuristics = lengthA - A[i].marbelNum;
+    A[i].marbelNum = heuristics;
 }
 
 return A;

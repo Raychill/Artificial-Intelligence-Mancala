@@ -21,7 +21,7 @@ public:
     int getNextMove(void);
     int getMinMove(void);
     int getMaxMove(void);
-    vector<cells> getMinMax(char player);
+    vector<cells> getMinMax();
 
 
     /*

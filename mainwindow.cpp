@@ -57,8 +57,10 @@ void MainWindow::on_actionDualPlayers_triggered()
 void MainWindow::on_actionSinglePlayer_triggered()
 {
     mode = SINGLE;
-    agent mAgent(board);
+
     board.setNewGame();
+    updateButtons();
+   // agent mAgent(board);
    // setAgentGame(-1,-1);
     setEnabledButtonSetA(true);
     setEnabledButtonSetB(false);
@@ -225,13 +227,15 @@ void MainWindow::updateButtons()
 
 void MainWindow::updateGameState(const unsigned int key, const unsigned int bankKey)
 {
+    agent AI(board);
     //pass in intkey, int bank position
     //if goagain is true then you
      // if key < boardsize/2 (B is shown)
     // if key > boardsize/2 (A is shown)
     // setEnabledButtonSetA/b(t/f);
     //updateButtons();
-    if(board.updateBoard(key,bankKey) == true){
+if(mode == DUALPLAYER){
+    if(board.updateBoard(key,bankKey) == true ){
         if(key < board.size()/2){
             setEnabledButtonSetB(false);
             setEnabledButtonSetA(true);
@@ -256,11 +260,43 @@ void MainWindow::updateGameState(const unsigned int key, const unsigned int bank
         }
     }
     updateButtons();
+}
+if(mode == SINGLE){
+    if(board.updateBoard(key,bankKey) == true ){
+       /* if(key < board.size()/2){
+            setEnabledButtonSetB(false);
+            setEnabledButtonSetA(true);
+
+
+        }*/
+       // if(key > board.size()/2){
+            setEnabledButtonSetA(true);
+            setEnabledButtonSetB(false);
+           // int index = AI.getMaxMove();
+           //board.updateBoard(index,8);// board.updateBoard(AI.getNextMove(),8);
+        //}
+
+    }
+    else
+    {       int index = AI.getMaxMove();
+            board.updateBoard(index,0);
+            setEnabledButtonSetA(true);
+            setEnabledButtonSetB(false);
+            //int index = AI.getMaxMove();
+
+       // }
+    }
+//updateGameState(AI.getMaxMove(),8);
+updateButtons();
+}
+
+
+
 
 
 }
-
-void MainWindow::setAgentGame(const int key,const int bankKey)
+//void Mainwindow::gameState
+/*void MainWindow::setAgentGame(const int key,const int bankKey)
 {
   if(board.updateBoard(key,bankKey) == true){
         if(key < board.size()/2){
@@ -293,4 +329,4 @@ void MainWindow::setAgentGame(const int key,const int bankKey)
 
 
 }
-
+*/

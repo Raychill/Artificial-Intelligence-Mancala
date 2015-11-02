@@ -25,7 +25,7 @@ private slots:
     void updateGameState(const unsigned int key, const unsigned int bankKey);
     void setEnabledButtonSetA(const bool b);
     void setEnabledButtonSetB(const bool b);
-    void setAgentGame(const int key, const int bankKey);
+   // void setAgentGame(const int key, const int bankKey);
    // void setGameState(gameMode currentGame);
     void on_actionDualPlayers_triggered();
 

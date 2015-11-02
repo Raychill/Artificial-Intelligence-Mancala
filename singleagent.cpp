@@ -1,4 +1,4 @@
-
+#include "cells.h"
 #include "singleagent.h"
 #include "mBoard.h"
 
@@ -45,19 +45,20 @@ int agent::getMinMove(void)
 int agent::getMaxMove(void)
 {
 
-    vector<cells> moves;
+    vector<cells> moves = getMinMax('A');
     //if statement to toggle who plays
-    moves = getMinMax('A');
+ //   moves = getMinMax('A');
     int max = moves[0].marbelNum;
+    int index;
     for(int i = 0; i < moves.size();i++){
         if(max < moves[i].marbelNum)
-            max = moves[i].marbelNum;
+            index = i;//max = moves[i].marbelNum;
         if(max == moves[i].marbelNum)
-            max = moves[i].marbelNum;
+             index = i+8;//max = moves[i].marbelNum;
 
 
     }
-   return max;
+   return index;
 
 }
 vector<cells> agent::getMinMax(char player)
@@ -69,10 +70,9 @@ int lengthB = game->getB().size();
 
 //int i = 0;
 if(player == 'A')
-//for(; !A[i].isBank; i = (i + 1) % game->cellCount)
 for(int i = 0; i < A.size();i++)
 {
-    A[i].marbelNum = A[i].marbelNum - lengthA + A[lengthA].marbelNum;
+    A[i].marbelNum += A[lengthA].marbelNum - lengthA;
 
 }
 
@@ -85,7 +85,7 @@ for(int i = 0; i < B.size();i++)
 
 }
 
-
+return A;
 }
 
 

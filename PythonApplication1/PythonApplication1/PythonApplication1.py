@@ -1,6 +1,5 @@
 ﻿#!/usr/bin/env python3
 
-
 from Ar import *
 from Domain import*
 
